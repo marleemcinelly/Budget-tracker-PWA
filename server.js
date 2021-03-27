@@ -5,15 +5,10 @@ const compression = require("compression");
 
 const app = express();
 
-mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb+srv://mars:dicks18*@cluster0.df2ov.mongodb.net/BudgetPWA?retryWrites=true&w=majority',
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false
-  }
-);
+var PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`App running on port ${PORT}!`);
+});
 
 app.use(logger("dev"));
 

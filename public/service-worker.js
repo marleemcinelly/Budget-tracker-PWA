@@ -32,43 +32,43 @@ self.addEventListener("activate", event => {
 });
 
 self.addEventListener('fetch', (event) => {
-    const {url} = event.request;
-    if (url.includes("/all") || url.includes("/find")) {
-        event.respondWith(
-          caches.open(cache_name).then(cache => {
-            return fetch(event.request)
-              .then(response => {
-                if (response.status === 200) {
-                  cache.put(event.request, response.clone());
-                }
+    // const {url} = event.request;
+    // if (url.includes("/all") || url.includes("/find")) {
+    //     event.respondWith(
+    //       caches.open(cache_name).then(cache => {
+    //         return fetch(event.request)
+    //           .then(response => {
+    //             if (response.status === 200) {
+    //               cache.put(event.request, response.clone());
+    //             }
     
-                return response;
-              })
-              .catch(err => {
-                return cache.match(event.request);
-              });
-          }).catch(err => console.log(err))
-        );
-      } else {
-        event.respondWith(
-          caches.open(cache_name).then(cache => {
-            return cache.match(event.request).then(response => {
-              return response || fetch(event.request);
-            });
-          })
-        );
-      }
+    //             return response;
+    //           })
+    //           .catch(err => {
+    //             return cache.match(event.request);
+    //           });
+    //       }).catch(err => console.log(err))
+    //     );
+    //   } else {
+    //     event.respondWith(
+    //       caches.open(cache_name).then(cache => {
+    //         return cache.match(event.request).then(response => {
+    //           return response || fetch(event.request);
+    //         });
+    //       })
+    //     );
+    //   }
 
-//   event.respondWith(
-//     caches.match(event.request).then((res) => {
-//           console.log('Fetching resource: '+event.request.url);
-//       return res || fetch(event.request).then((response) => {
-//                 return caches.open(cache_name).then((cache) => {
-//           console.log('Caching new resource: '+event.request.url);
-//           cache.put(event.request, response.clone());
-//           return response;
-//         });
-//       });
-//     })
-//   );
+  event.respondWith(
+    caches.match(event.request).then((res) => {
+          console.log('Fetching resource: '+event.request.url);
+      return res || fetch(event.request).then((response) => {
+                return caches.open(cache_name).then((cache) => {
+          console.log('Caching new resource: '+event.request.url);
+          cache.put(event.request, response.clone());
+          return response;
+        });
+      });
+    })
+  );
 });

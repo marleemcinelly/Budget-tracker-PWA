@@ -5,10 +5,15 @@ const compression = require("compression");
 
 const app = express();
 
-var PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`App running on port ${PORT}!`);
-});
+mongoose.connect(
+  process.env.MONGODB_URI || 'mongodb://localhost/deep-thoughts',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  }
+);
 
 app.use(logger("dev"));
 

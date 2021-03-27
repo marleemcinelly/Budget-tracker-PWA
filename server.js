@@ -6,7 +6,7 @@ const compression = require("compression");
 const app = express();
 
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/deep-thoughts',
+  process.env.MONGODB_URI || 'mongodb://localhost/BudgetPWA',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
